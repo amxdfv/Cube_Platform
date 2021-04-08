@@ -1,16 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Cube : MonoBehaviour
 {
     public int live;
     GameObject GO;
+    public Text cap;
 
     // Use this for initialization
     void Start()
     {
         GO = this.gameObject;
+        LifeDisplay();
     }
 
     // Update is called once per frame
@@ -19,6 +22,10 @@ public class Cube : MonoBehaviour
 
     }
 
+    public void LifeDisplay()
+    {
+        cap.text = live.ToString();
+    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -28,6 +35,7 @@ public class Cube : MonoBehaviour
         } else
         {
             live = live - 1;
+            LifeDisplay();
         }
     }
 }

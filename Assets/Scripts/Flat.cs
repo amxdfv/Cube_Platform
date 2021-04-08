@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Flat : MonoBehaviour {
 
@@ -23,12 +24,16 @@ public class Flat : MonoBehaviour {
         {
 
             // rb.AddForce(Vector2.left*50f, ForceMode2D.Impulse);
-             Brik.transform.Translate(Vector2.left*15f*Time.deltaTime);
+             Brik.transform.Translate(Vector2.left*150f*Time.deltaTime);
         }
         if (Input.GetKey(KeyCode.D))
         {
            // rb.AddForce(Vector2.right * 50f,ForceMode2D.Impulse);
-            Brik.transform.Translate(Vector2.right * 15f * Time.deltaTime);
+            Brik.transform.Translate(Vector2.right * 150f * Time.deltaTime);
+        }
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            SceneManager.LoadScene("MaimMenu");
         }
     }
 

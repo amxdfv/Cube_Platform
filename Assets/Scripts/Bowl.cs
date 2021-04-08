@@ -1,17 +1,19 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class Bowl : MonoBehaviour
 {
-
+   public  GameObject WP;
     private Rigidbody2D rb;
     public GameObject Shar;
 
     // Use this for initialization
     void Start()
     {
+        WP.SetActive(false);
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -23,21 +25,44 @@ public class Bowl : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        float speed = Math.Abs(rb.velocity.x) + Math.Abs(rb.velocity.y);   // calculate speed
+        if (speed < 100)
         {
-            rb.velocity = rb.velocity * 1.1f;
+            if (collision.gameObject.CompareTag("Player"))
+            {
+                rb.velocity = rb.velocity * 1.5f;
+            }
+            else
+            {
+                rb.velocity = rb.velocity * 1.02f;
+            }
+         //   Debug.Log(speed);
+        } else
+        {
+          //  Debug.Log("Ограничение");
         }
-        //  rb.velocity = rb.velocity * 1.1f;
-        //  Vector3 Upp = new Vector3(0, 10f, 0);
-        //   rb.AddForce(Upp, ForceMode2D.Impulse);
-
+        WinCount();
+       
     }
 
     void OnTriggerEnter2D(Collider2D col)
     {
         if (col.CompareTag("Finish"))
         {
-            SceneManager.LoadScene(0);
+            SceneManager.LoadScene("Stage1");
         }
     }
+
+    void WinCount()
+    {
+      GameObject[] WinRate = GameObject.FindGameObjectsWithTag("Cube");
+        if (WinRate.Length == 0)
+        {
+            WP.SetActive(true);
+            rb.constraints = RigidbodyConstraints2D.FreezePosition;
+
+        }
+    }
+
+
 }
